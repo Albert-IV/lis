@@ -25,6 +25,14 @@
         this.$footer = qs('#footer');
         this.$toggleAll = qs('#toggle-all');
         this.$newTodo = qs('#new-todo');
+
+        this.$$todoList = $$('#todo-list');
+        this.$$todoItemCounter = $$('#todo-count');
+        this.$$clearCompleted = $$('#clear-completed');
+        this.$$main = $$('#main');
+        this.$$footer = $$('#footer');
+        this.$$toggleAll = $$('#toggle-all');
+        this.$$newTodo = $$('#new-todo');
     }
 
     View.prototype._removeItem = function (id) {
@@ -140,14 +148,14 @@
 
     View.prototype._bindItemEditDone = function (handler) {
         var that = this;
-        $live('#todo-list li .edit', 'blur', function () {
-            if (!this.dataset.iscanceled) {
-                handler({
-                    id: that._itemId(this),
-                    title: this.value
-                });
-            }
-        });
+        // $live('#todo-list li .edit', 'blur', function () {
+        //     if (!this.dataset.iscanceled) {
+        //         handler({
+        //             id: that._itemId(this),
+        //             title: this.value
+        //         });
+        //     }
+        // });
 
         $live('#todo-list li .edit', 'keypress', function (event) {
             if (event.keyCode === that.ENTER_KEY) {
@@ -173,7 +181,11 @@
     View.prototype.bind = function (event, handler) {
         var that = this;
         if (event === 'newTodo') {
-            $on(that.$newTodo, 'change', function () {
+            // $on(that.$newTodo, 'change', function () {
+            //     handler(that.$newTodo.value);
+            // });
+
+            that.$$newTodo.hold(function () {
                 handler(that.$newTodo.value);
             });
 
