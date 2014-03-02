@@ -63,7 +63,7 @@
         listItem.className = completed ? 'completed' : '';
 
         // In case it was toggled from an event and not by clicking the checkbox
-        qs('input', listItem).checked = completed;
+        // qs('input', listItem).checked = completed;
     };
 
     View.prototype._editItem = function (id, title) {
@@ -148,14 +148,14 @@
 
     View.prototype._bindItemEditDone = function (handler) {
         var that = this;
-        // $live('#todo-list li .edit', 'blur', function () {
-        //     if (!this.dataset.iscanceled) {
-        //         handler({
-        //             id: that._itemId(this),
-        //             title: this.value
-        //         });
-        //     }
-        // });
+        $live('#todo-list li .edit', 'blur', function () {
+            if (!this.dataset.iscanceled) {
+                handler({
+                    id: that._itemId(this),
+                    title: this.value
+                });
+            }
+        });
 
         $live('#todo-list li .edit', 'keypress', function (event) {
             if (event.keyCode === that.ENTER_KEY) {
@@ -181,9 +181,9 @@
     View.prototype.bind = function (event, handler) {
         var that = this;
         if (event === 'newTodo') {
-            // $on(that.$newTodo, 'change', function () {
-            //     handler(that.$newTodo.value);
-            // });
+            $on(that.$newTodo, 'change', function () {
+                handler(that.$newTodo.value);
+            });
 
             that.$$newTodo.hold(function () {
                 handler(that.$newTodo.value);
@@ -200,22 +200,36 @@
             });
 
         } else if (event === 'itemEdit') {
-            $live('#todo-list li label', 'dblclick', function () {
+
+            that.$$todoList.on('doubleTap', 'li label', function() {
                 handler({id: that._itemId(this)});
             });
 
         } else if (event === 'itemRemove') {
-            $live('#todo-list .destroy', 'click', function () {
-                handler({id: that._itemId(this)});
-            });
+            // $live('#todo-list .destroy', 'click', function () {
+            //     handler({id: that._itemId(this)});
+            // });
+    
+            that.$$todoList.on('swipeLeft', 'li', function() {
+                handler({id: this.getAttribute('data-id')});
+            })
 
         } else if (event === 'itemToggle') {
-            $live('#todo-list .toggle', 'click', function () {
+            // $live('#todo-list .toggle', 'click', function () {
+            //     handler({
+            //         id: that._itemId(this),
+            //         completed: this.checked
+            //     });
+            // });
+    
+            that.$$todoList.on('swipeRight', 'li', function() {
+
                 handler({
-                    id: that._itemId(this),
-                    completed: this.checked
+                    id: this.getAttribute('data-id'),
+                    completed: !this.classList.contains('completed')
                 });
-            });
+
+            })
 
         } else if (event === 'itemEditDone') {
             that._bindItemEditDone(handler);
