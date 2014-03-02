@@ -211,7 +211,7 @@
             // });
     
             that.$$todoList.on('swipeLeft', 'li', function() {
-                handler({id: this.getAttribute('data-id')});
+                handler({id: parseInt(this.getAttribute('data-id'), 10)});
             })
 
         } else if (event === 'itemToggle') {
@@ -225,7 +225,7 @@
             that.$$todoList.on('swipeRight', 'li', function() {
 
                 handler({
-                    id: this.getAttribute('data-id'),
+                    id: parseInt(this.getAttribute('data-id'), 10),
                     completed: !this.classList.contains('completed')
                 });
 
