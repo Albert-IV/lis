@@ -185,7 +185,7 @@
                 handler(that.$newTodo.value);
             });
 
-            that.$$newTodo.hold(function () {
+            that.$$newTodo.doubleTap(function () {
                 handler(that.$newTodo.value);
             });
 
