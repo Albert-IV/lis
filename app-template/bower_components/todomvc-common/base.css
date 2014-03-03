@@ -101,7 +101,7 @@ input[type="checkbox"] {
 	top: 0;
 	right: 0;
 	left: 0;
-	height: 15px;
+	height: 30px;
 	border-bottom: 1px solid #6c615c;
 	background: #8d7d77;
 	background: -webkit-gradient(linear, left top, left bottom, from(rgba(132, 110, 100, 1)),to(rgba(101, 84, 76, 1)));
@@ -148,6 +148,7 @@ input[type="checkbox"] {
 #main {
 	position: relative;
 	border-top: 1px dotted #adadad;
+	z-index: 100;
 }
 
 label[for='toggle-all'] {
