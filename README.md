@@ -1,6 +1,4 @@
 lis
 ===
 
-Web 3.0
-
-test
+Firefox OS Todo application.  Code heavily stolen from [TodoMVC.](http://todomvc.com/)
